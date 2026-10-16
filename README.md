@@ -14,7 +14,7 @@ Site: [stagekeys.com.br](https://stagekeys.com.br)
 
 Get the `.dmg` files from the [latest release](https://github.com/renatoruis/stagekeys/releases/latest). macOS 14 or later.
 
-The apps are not on the App Store. The first time you open one, macOS may block it: go to System Settings, Privacy & Security, and click **Open Anyway**.
+The apps are not on the App Store, but they are signed and notarized by Apple, so macOS opens them normally.
 
 ## Building
 
