@@ -1,0 +1,12 @@
+.DS_Store
+build/
+dist/
+DerivedData/
+xcuserdata/
+*.xcuserstate
+*.sf2
+.wrangler/
+node_modules/
+.env*
+.dev.vars*
+graphify-out/

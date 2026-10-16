@@ -1,0 +1,533 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 56;
+	objects = {
+/* Begin PBXFileReference section */
+		F30000000000000000000001 /* AppModel+Setlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppModel+Setlist.swift"; sourceTree = "<group>"; };
+		F30000000000000000000003 /* AppModel+Pads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppModel+Pads.swift"; sourceTree = "<group>"; };
+		F30000000000000000000005 /* AppModel+Drums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppModel+Drums.swift"; sourceTree = "<group>"; };
+		F30000000000000000000007 /* AppModel+Metronome.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppModel+Metronome.swift"; sourceTree = "<group>"; };
+		F30000000000000000000009 /* AppModel+MIDI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AppModel+MIDI.swift"; sourceTree = "<group>"; };
+		F20000000000000000000001 /* SendBus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendBus.swift; sourceTree = "<group>"; };
+		F20000000000000000000003 /* DS+App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DS+App.swift"; sourceTree = "<group>"; };
+		B15A13ACECE86FF5B996CE6C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6EAE056A08BF395F7E4982C0 /* StageKeysPlay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StageKeysPlay.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		C1D699F13F170C719B14A1EE /* AppModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModel.swift; sourceTree = "<group>"; };
+		9A9611D05BFA088F42801D78 /* AudioBuffers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioBuffers.swift; sourceTree = "<group>"; };
+		3159E731DBB5A3B5A7064C0B /* OutputRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputRouter.swift; sourceTree = "<group>"; };
+		CA6AE828D6F598685504C870 /* DrumEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrumEngine.swift; sourceTree = "<group>"; };
+		4D34072A901B9D16490374AA /* MetronomeEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetronomeEngine.swift; sourceTree = "<group>"; };
+		8B892D798C0227A627EA9D8E /* PadEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadEngine.swift; sourceTree = "<group>"; };
+		2410D030E3D23E698E89C245 /* MIDIManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MIDIManager.swift; sourceTree = "<group>"; };
+		B8F0F2512DE2BD280D8D1FD4 /* ResourceCatalog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResourceCatalog.swift; sourceTree = "<group>"; };
+		6BCE31B20285E3D090B10CBF /* Rig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Rig.swift; sourceTree = "<group>"; };
+		4CB930AF6642D1DA11CA89AE /* Set.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Set.swift; sourceTree = "<group>"; };
+		152DB889B4BB32271F633344 /* StageKeysPlayApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageKeysPlayApp.swift; sourceTree = "<group>"; };
+		7C43505D9838A96986ABDEF5 /* SetStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetStore.swift; sourceTree = "<group>"; };
+		E261ACE610CBEE04D4E87304 /* AudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioView.swift; sourceTree = "<group>"; };
+		3D26EE524C4ADF246A911B7F /* EffectChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EffectChain.swift; sourceTree = "<group>"; };
+		A49FA87ACDCC80D820DEF833 /* MeterStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeterStore.swift; sourceTree = "<group>"; };
+		733AE21F3254725324E8FBD0 /* Tokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tokens.swift; sourceTree = "<group>"; };
+		8E72D6441622123F0B640A5E /* Panel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panel.swift; sourceTree = "<group>"; };
+		EA1BC80AF4640734B4F83169 /* ScrollWheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollWheel.swift; sourceTree = "<group>"; };
+		38DD0D7845651615D04DC167 /* Knob.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Knob.swift; sourceTree = "<group>"; };
+		633740516CFFEC3D68EBDB0B /* VerticalFader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerticalFader.swift; sourceTree = "<group>"; };
+		BBE26DCFF8022A60269F668C /* LevelMeter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelMeter.swift; sourceTree = "<group>"; };
+		D5C424C3A4B567D3CDF46DC8 /* PowerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PowerButton.swift; sourceTree = "<group>"; };
+		F69FA19B0C496311CDF8A19D /* LibraryPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPicker.swift; sourceTree = "<group>"; };
+		9DAF6A929E4D5C07CD962D15 /* SegmentButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentButtons.swift; sourceTree = "<group>"; };
+		31A5B829D09F125B5AA8BE1D /* KeySelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeySelector.swift; sourceTree = "<group>"; };
+		1889A79B7245D697657643D2 /* PerformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformView.swift; sourceTree = "<group>"; };
+		8D2D5C565C13A2C40D5119F0 /* TopBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopBar.swift; sourceTree = "<group>"; };
+		D679720D4A61FA16F569A14C /* PadSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PadSection.swift; sourceTree = "<group>"; };
+		F1A2B3C4D5E6F708192A3B4C /* StageControls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StageControls.swift; sourceTree = "<group>"; };
+		AD6FC0C0A4428D5DA696BCFD /* MetronomePanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetronomePanel.swift; sourceTree = "<group>"; };
+		035469A514D2954A007B1F31 /* DrumGrid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrumGrid.swift; sourceTree = "<group>"; };
+		A1000000000000000000000A /* Realtime.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Realtime.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+/* Begin PBXGroup section */
+		E45F76C2D80FAD483876517A /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				9A9611D05BFA088F42801D78 /* AudioBuffers.swift */,
+				3D26EE524C4ADF246A911B7F /* EffectChain.swift */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		1C22E2E5BDDBC63D373F4583 /* Engines */ = {
+			isa = PBXGroup;
+			children = (
+				CA6AE828D6F598685504C870 /* DrumEngine.swift */,
+				4D34072A901B9D16490374AA /* MetronomeEngine.swift */,
+				8B892D798C0227A627EA9D8E /* PadEngine.swift */,
+			);
+			path = Engines;
+			sourceTree = "<group>";
+		};
+		13CB9448904D13D14C47BDD4 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				B8F0F2512DE2BD280D8D1FD4 /* ResourceCatalog.swift */,
+				6BCE31B20285E3D090B10CBF /* Rig.swift */,
+				4CB930AF6642D1DA11CA89AE /* Set.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		84CF25C76D64DAA0B536E4A0 /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				7C43505D9838A96986ABDEF5 /* SetStore.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+		C71E237AED0167A15E00637D /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				E261ACE610CBEE04D4E87304 /* AudioView.swift */,
+				1F3434C0296568BBAEAF9F4D /* DS */,
+				C653AAC5E6492E00332F1E89 /* Perform */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		82CF2A43A7100F086D7FCFDD /* StageKeysPlay */ = {
+			isa = PBXGroup;
+			children = (
+				C1D699F13F170C719B14A1EE /* AppModel.swift */,
+				F30000000000000000000001 /* AppModel+Setlist.swift */,
+				F30000000000000000000003 /* AppModel+Pads.swift */,
+				F30000000000000000000005 /* AppModel+Drums.swift */,
+				F30000000000000000000007 /* AppModel+Metronome.swift */,
+				F30000000000000000000009 /* AppModel+MIDI.swift */,
+				152DB889B4BB32271F633344 /* StageKeysPlayApp.swift */,
+				B15A13ACECE86FF5B996CE6C /* Info.plist */,
+				E45F76C2D80FAD483876517A /* Audio */,
+				1C22E2E5BDDBC63D373F4583 /* Engines */,
+				13CB9448904D13D14C47BDD4 /* Model */,
+				84CF25C76D64DAA0B536E4A0 /* Store */,
+				C71E237AED0167A15E00637D /* UI */,
+			);
+			path = StageKeysPlay;
+			sourceTree = "<group>";
+		};
+		B9340614599AB78F485950C7 = {
+			isa = PBXGroup;
+			children = (
+				F20000000000000000000005 /* Shared */,
+				82CF2A43A7100F086D7FCFDD /* StageKeysPlay */,
+			);
+			sourceTree = "<group>";
+		};
+		1F3434C0296568BBAEAF9F4D /* DS */ = {
+			isa = PBXGroup;
+			children = (
+				F20000000000000000000003 /* DS+App.swift */,
+				F69FA19B0C496311CDF8A19D /* LibraryPicker.swift */,
+				31A5B829D09F125B5AA8BE1D /* KeySelector.swift */,
+			);
+			path = DS;
+			sourceTree = "<group>";
+		};
+		C653AAC5E6492E00332F1E89 /* Perform */ = {
+			isa = PBXGroup;
+			children = (
+				1889A79B7245D697657643D2 /* PerformView.swift */,
+				8D2D5C565C13A2C40D5119F0 /* TopBar.swift */,
+				D679720D4A61FA16F569A14C /* PadSection.swift */,
+				F1A2B3C4D5E6F708192A3B4C /* StageControls.swift */,
+				AD6FC0C0A4428D5DA696BCFD /* MetronomePanel.swift */,
+				035469A514D2954A007B1F31 /* DrumGrid.swift */,
+			);
+			path = Perform;
+			sourceTree = "<group>";
+		};
+		F20000000000000000000005 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				F20000000000000000000006 /* UI */,
+				F20000000000000000000008 /* Audio */,
+				F20000000000000000000009 /* MIDI */,
+			);
+			path = ../Shared;
+			sourceTree = SOURCE_ROOT;
+		};
+		F20000000000000000000006 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				F20000000000000000000007 /* DS */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		F20000000000000000000007 /* DS */ = {
+			isa = PBXGroup;
+			children = (
+				733AE21F3254725324E8FBD0 /* Tokens.swift */,
+				8E72D6441622123F0B640A5E /* Panel.swift */,
+				EA1BC80AF4640734B4F83169 /* ScrollWheel.swift */,
+				38DD0D7845651615D04DC167 /* Knob.swift */,
+				633740516CFFEC3D68EBDB0B /* VerticalFader.swift */,
+				BBE26DCFF8022A60269F668C /* LevelMeter.swift */,
+				D5C424C3A4B567D3CDF46DC8 /* PowerButton.swift */,
+				9DAF6A929E4D5C07CD962D15 /* SegmentButtons.swift */,
+			);
+			path = DS;
+			sourceTree = "<group>";
+		};
+		F20000000000000000000008 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				3159E731DBB5A3B5A7064C0B /* OutputRouter.swift */,
+				A49FA87ACDCC80D820DEF833 /* MeterStore.swift */,
+				A1000000000000000000000A /* Realtime.swift */,
+				F20000000000000000000001 /* SendBus.swift */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
+		F20000000000000000000009 /* MIDI */ = {
+			isa = PBXGroup;
+			children = (
+				2410D030E3D23E698E89C245 /* MIDIManager.swift */,
+			);
+			path = MIDI;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+/* Begin PBXNativeTarget section */
+		E3435DDA2687639586BF0B70 /* StageKeysPlay */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 29558535A58E48B54399819B /* Build configuration list for PBXNativeTarget "StageKeysPlay" */;
+			buildPhases = (
+				7A70D71C385290AF96BF1031 /* Sources */,
+				424153ED3CD079DB4DB459AF /* Frameworks */,
+				5FEA283755AD6B6F32245425 /* Sync Resources */,
+			);
+			buildRules = ();
+			dependencies = ();
+			packageProductDependencies = (
+				AA00000000000000000000A1 /* AudioKit */,
+				AA00000000000000000000A2 /* SoundpipeAudioKit */,
+			);
+			name = StageKeysPlay;
+			productName = StageKeysPlay;
+			productReference = 6EAE056A08BF395F7E4982C0 /* StageKeysPlay.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+/* Begin PBXProject section */
+		46F86FAA6BBF9AC94A7E4595 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 2620;
+			};
+			buildConfigurationList = F72CF5329F6CB55C2A8467D4 /* Build configuration list for PBXProject "StageKeysPlay" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B9340614599AB78F485950C7;
+			productRefGroup = B9340614599AB78F485950C7;
+			projectDirPath = "";
+			projectRoot = "";
+			packageReferences = (
+				AA00000000000000000000B1 /* XCRemoteSwiftPackageReference "AudioKit" */,
+				AA00000000000000000000B2 /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */,
+			);
+			targets = (
+				E3435DDA2687639586BF0B70 /* StageKeysPlay */,
+			);
+		};
+/* End PBXProject section */
+/* Begin PBXFrameworksBuildPhase section */
+		424153ED3CD079DB4DB459AF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA00000000000000000000C1 /* AudioKit in Frameworks */,
+				AA00000000000000000000C2 /* SoundpipeAudioKit in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+/* Begin PBXShellScriptBuildPhase section */
+		5FEA283755AD6B6F32245425 /* Sync Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = ();
+			inputPaths = (
+				"$(SRCROOT)/scripts/sync-resources.sh",
+				"$(SRCROOT)/Resources",
+			);
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/StageLibrary",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "bash \"${SRCROOT}/scripts/sync-resources.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+/* Begin PBXSourcesBuildPhase section */
+		7A70D71C385290AF96BF1031 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F20000000000000000000002 /* SendBus.swift in Sources */,
+				F20000000000000000000004 /* DS+App.swift in Sources */,
+				C42B122F4C5426FC64DC48E1 /* AppModel.swift in Sources */,
+				F30000000000000000000002 /* AppModel+Setlist.swift in Sources */,
+				F30000000000000000000004 /* AppModel+Pads.swift in Sources */,
+				F30000000000000000000006 /* AppModel+Drums.swift in Sources */,
+				F30000000000000000000008 /* AppModel+Metronome.swift in Sources */,
+				F3000000000000000000000A /* AppModel+MIDI.swift in Sources */,
+				B812602F9F5F72EEB2BA59AF /* AudioBuffers.swift in Sources */,
+				1B73EDC59DF76550D24437CB /* OutputRouter.swift in Sources */,
+				16DD8CBABEA8225A28192C50 /* DrumEngine.swift in Sources */,
+				107C7AE29154985B8C7C31E2 /* MetronomeEngine.swift in Sources */,
+				BFB61EC47A8B5790372BADBF /* PadEngine.swift in Sources */,
+				EB1E73B402EC821D9C95ACA2 /* MIDIManager.swift in Sources */,
+				144D7D4419E7729424A3F1D7 /* ResourceCatalog.swift in Sources */,
+				2C1055CBD091611486AAD759 /* Rig.swift in Sources */,
+				5997759CA22903F4D5B015F0 /* Set.swift in Sources */,
+				82C8A77166828BEAEE898984 /* StageKeysPlayApp.swift in Sources */,
+				0A8FAC386CBB3E837E9FB4D1 /* SetStore.swift in Sources */,
+				189BAD124652034D17126161 /* AudioView.swift in Sources */,
+				1BE79B302DA582E5E550E524 /* EffectChain.swift in Sources */,
+				4D09887C5D6C9618B3A74DA9 /* MeterStore.swift in Sources */,
+				390C4520A0ED2AC953C15CEC /* Tokens.swift in Sources */,
+				54F40442862A7081120547B0 /* Panel.swift in Sources */,
+				6C64344586954FAC040275D8 /* ScrollWheel.swift in Sources */,
+				435DBBCACAE0608ED537820C /* Knob.swift in Sources */,
+				3900EE9DE1772E9CB3AA5E60 /* VerticalFader.swift in Sources */,
+				FF8E4DE23A78180C082BC792 /* LevelMeter.swift in Sources */,
+				961714BF83FFF09383A97307 /* PowerButton.swift in Sources */,
+				5F065168BB6FED4A65DE8B48 /* LibraryPicker.swift in Sources */,
+				AE4BE146E8CF6444D4114985 /* SegmentButtons.swift in Sources */,
+				92447EBB686D327532585800 /* KeySelector.swift in Sources */,
+				C29C6E9C0A0787A578622D10 /* PerformView.swift in Sources */,
+				2E96D5188005EA93B7F0BF67 /* TopBar.swift in Sources */,
+				CE7573BC8ED43D96F97E734D /* PadSection.swift in Sources */,
+				C4D5E6F708192A3B4C5D6E7F /* StageControls.swift in Sources */,
+				302F65E04F47FBBB5F77931B /* MetronomePanel.swift in Sources */,
+				1DCD8DD42E232A1E7741E456 /* DrumGrid.swift in Sources */,
+				C1000000000000000000000C /* Realtime.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+/* Begin PBXBuildFile section */
+		F30000000000000000000002 /* AppModel+Setlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30000000000000000000001 /* AppModel+Setlist.swift */; };
+		F30000000000000000000004 /* AppModel+Pads.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30000000000000000000003 /* AppModel+Pads.swift */; };
+		F30000000000000000000006 /* AppModel+Drums.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30000000000000000000005 /* AppModel+Drums.swift */; };
+		F30000000000000000000008 /* AppModel+Metronome.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30000000000000000000007 /* AppModel+Metronome.swift */; };
+		F3000000000000000000000A /* AppModel+MIDI.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30000000000000000000009 /* AppModel+MIDI.swift */; };
+		F20000000000000000000002 /* SendBus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20000000000000000000001 /* SendBus.swift */; };
+		F20000000000000000000004 /* DS+App.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20000000000000000000003 /* DS+App.swift */; };
+		AA00000000000000000000C1 /* AudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = AA00000000000000000000A1 /* AudioKit */; };
+		AA00000000000000000000C2 /* SoundpipeAudioKit in Frameworks */ = {isa = PBXBuildFile; productRef = AA00000000000000000000A2 /* SoundpipeAudioKit */; };
+		C42B122F4C5426FC64DC48E1 /* AppModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D699F13F170C719B14A1EE /* AppModel.swift */; };
+		B812602F9F5F72EEB2BA59AF /* AudioBuffers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9611D05BFA088F42801D78 /* AudioBuffers.swift */; };
+		1B73EDC59DF76550D24437CB /* OutputRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3159E731DBB5A3B5A7064C0B /* OutputRouter.swift */; };
+		16DD8CBABEA8225A28192C50 /* DrumEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = CA6AE828D6F598685504C870 /* DrumEngine.swift */; };
+		107C7AE29154985B8C7C31E2 /* MetronomeEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D34072A901B9D16490374AA /* MetronomeEngine.swift */; };
+		BFB61EC47A8B5790372BADBF /* PadEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B892D798C0227A627EA9D8E /* PadEngine.swift */; };
+		EB1E73B402EC821D9C95ACA2 /* MIDIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2410D030E3D23E698E89C245 /* MIDIManager.swift */; };
+		144D7D4419E7729424A3F1D7 /* ResourceCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F0F2512DE2BD280D8D1FD4 /* ResourceCatalog.swift */; };
+		2C1055CBD091611486AAD759 /* Rig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCE31B20285E3D090B10CBF /* Rig.swift */; };
+		5997759CA22903F4D5B015F0 /* Set.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB930AF6642D1DA11CA89AE /* Set.swift */; };
+		82C8A77166828BEAEE898984 /* StageKeysPlayApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152DB889B4BB32271F633344 /* StageKeysPlayApp.swift */; };
+		0A8FAC386CBB3E837E9FB4D1 /* SetStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C43505D9838A96986ABDEF5 /* SetStore.swift */; };
+		189BAD124652034D17126161 /* AudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E261ACE610CBEE04D4E87304 /* AudioView.swift */; };
+		1BE79B302DA582E5E550E524 /* EffectChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D26EE524C4ADF246A911B7F /* EffectChain.swift */; };
+		4D09887C5D6C9618B3A74DA9 /* MeterStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A49FA87ACDCC80D820DEF833 /* MeterStore.swift */; };
+		390C4520A0ED2AC953C15CEC /* Tokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 733AE21F3254725324E8FBD0 /* Tokens.swift */; };
+		54F40442862A7081120547B0 /* Panel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E72D6441622123F0B640A5E /* Panel.swift */; };
+		6C64344586954FAC040275D8 /* ScrollWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA1BC80AF4640734B4F83169 /* ScrollWheel.swift */; };
+		435DBBCACAE0608ED537820C /* Knob.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DD0D7845651615D04DC167 /* Knob.swift */; };
+		3900EE9DE1772E9CB3AA5E60 /* VerticalFader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 633740516CFFEC3D68EBDB0B /* VerticalFader.swift */; };
+		FF8E4DE23A78180C082BC792 /* LevelMeter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBE26DCFF8022A60269F668C /* LevelMeter.swift */; };
+		961714BF83FFF09383A97307 /* PowerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C424C3A4B567D3CDF46DC8 /* PowerButton.swift */; };
+		5F065168BB6FED4A65DE8B48 /* LibraryPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69FA19B0C496311CDF8A19D /* LibraryPicker.swift */; };
+		AE4BE146E8CF6444D4114985 /* SegmentButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9DAF6A929E4D5C07CD962D15 /* SegmentButtons.swift */; };
+		92447EBB686D327532585800 /* KeySelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A5B829D09F125B5AA8BE1D /* KeySelector.swift */; };
+		C29C6E9C0A0787A578622D10 /* PerformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1889A79B7245D697657643D2 /* PerformView.swift */; };
+		2E96D5188005EA93B7F0BF67 /* TopBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D2D5C565C13A2C40D5119F0 /* TopBar.swift */; };
+		CE7573BC8ED43D96F97E734D /* PadSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = D679720D4A61FA16F569A14C /* PadSection.swift */; };
+		C4D5E6F708192A3B4C5D6E7F /* StageControls.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A2B3C4D5E6F708192A3B4C /* StageControls.swift */; };
+		302F65E04F47FBBB5F77931B /* MetronomePanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD6FC0C0A4428D5DA696BCFD /* MetronomePanel.swift */; };
+		1DCD8DD42E232A1E7741E456 /* DrumGrid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035469A514D2954A007B1F31 /* DrumGrid.swift */; };
+		C1000000000000000000000C /* Realtime.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1000000000000000000000A /* Realtime.swift */; };
+/* End PBXBuildFile section */
+/* Begin XCBuildConfiguration section */
+		06DB87319F2818D2126BDA3E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+			};
+			name = Debug;
+		};
+		EAEC4ABA75D5863313556F12 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+			};
+			name = Release;
+		};
+		968426D8A36492C5C326175F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				ONLY_ACTIVE_ARCH = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = StageKeysPlay/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = personal.stagekeys.play;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				COMBINE_HIDPI_IMAGES = YES;
+			};
+			name = Debug;
+		};
+		038CE5F9D645F2DABC3BB617 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				MTL_ENABLE_DEBUG_INFO = NO;
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				SDKROOT = macosx;
+				SWIFT_VERSION = 5.0;
+				SWIFT_STRICT_CONCURRENCY = minimal;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "-";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_APP_SANDBOX = NO;
+				ENABLE_HARDENED_RUNTIME = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = StageKeysPlay/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = personal.stagekeys.play;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				COMBINE_HIDPI_IMAGES = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+/* Begin XCConfigurationList section */
+		F72CF5329F6CB55C2A8467D4 /* Build configuration list for PBXProject "StageKeysPlay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				06DB87319F2818D2126BDA3E /* Debug */,
+				EAEC4ABA75D5863313556F12 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		29558535A58E48B54399819B /* Build configuration list for PBXNativeTarget "StageKeysPlay" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				968426D8A36492C5C326175F /* Debug */,
+				038CE5F9D645F2DABC3BB617 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+/* Begin XCRemoteSwiftPackageReference section */
+		AA00000000000000000000B1 /* XCRemoteSwiftPackageReference "AudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/AudioKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.0;
+			};
+		};
+		AA00000000000000000000B2 /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AudioKit/SoundpipeAudioKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+/* Begin XCSwiftPackageProductDependency section */
+		AA00000000000000000000A1 /* AudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA00000000000000000000B1 /* XCRemoteSwiftPackageReference "AudioKit" */;
+			productName = AudioKit;
+		};
+		AA00000000000000000000A2 /* SoundpipeAudioKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = AA00000000000000000000B2 /* XCRemoteSwiftPackageReference "SoundpipeAudioKit" */;
+			productName = SoundpipeAudioKit;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 46F86FAA6BBF9AC94A7E4595 /* Project object */;
+}

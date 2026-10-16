@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>StageKeys · apps para tocar teclado ao vivo no Mac</title>
+  <meta name="description" content="StageKeys e StageKeys Play: dois apps para tecladistas tocarem ao vivo. Só para macOS, download direto.">
+  <meta property="og:title" content="StageKeys">
+  <meta property="og:description" content="Dois apps para tocar teclado ao vivo. Só para macOS.">
+  <meta property="og:url" content="https://stagekeys.com.br/">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#10131d">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&display=swap">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="top wrap">
+    <a class="mark" href="/" aria-label="StageKeys">
+      <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+      stagekeys
+    </a>
+    <span class="chip">só para macOS</span>
+  </header>
+
+  <main>
+    <section class="hero wrap">
+      <p class="label" style="--c: var(--orange)">Projeto de hobby</p>
+      <h1>Pluga o teclado no Mac<br>e <em>vai tocar.</em></h1>
+      <p class="sub">Dois apps que fiz para uns amigos tecladistas: um cuida dos timbres, o outro de tudo que toca junto com você no palco.</p>
+      <div class="ctas">
+        <a class="btn" style="--c: var(--cyan)" href="#">Baixar StageKeys</a>
+        <a class="btn" style="--c: var(--purple)" href="#">Baixar StageKeys Play</a>
+      </div>
+      <p class="meta">Grátis · .dmg · macOS 14 ou mais recente · fora da App Store por enquanto</p>
+
+      <div class="piano" id="piano" aria-hidden="true"></div>
+      <p class="hint">Clica nas teclas. Ou usa A S D F G H J K no seu teclado.</p>
+    </section>
+
+    <section class="app wrap" style="--c: var(--cyan)">
+      <div class="head">
+        <div>
+          <p class="label">01 · Timbres</p>
+          <h2>StageKeys</h2>
+          <p class="lead">Os timbres do seu teclado, prontos para o show.</p>
+        </div>
+        <a class="btn" href="#">Baixar StageKeys</a>
+      </div>
+      <ol class="feats">
+        <li style="--c: var(--cyan)"><b>Quatro camadas</b>Cada uma com volume, filtro, compressor, reverb e espaço.</li>
+        <li style="--c: var(--green)"><b>Tudo no MIDI</b>Qualquer knob ou botão pode ir para o seu controlador.</li>
+        <li style="--c: var(--orange)"><b>Biblioteca online</b>Pianos, Nord, pads, cordas. Baixa só o que vai usar.</li>
+        <li style="--c: var(--pink)"><b>Modo Live</b>Trava a edição na hora do show, para nada mudar sem querer.</li>
+      </ol>
+      <figure class="shot">
+        <img src="/img/stagekeys.png" width="2000" height="1320" alt="Janela do StageKeys com quatro camadas de timbres: piano, piano elétrico, pad e cordas." loading="lazy">
+      </figure>
+    </section>
+
+    <p class="plus wrap"><span>+</span>Funcionam separados. Usa um, o outro, ou os dois juntos.</p>
+
+    <section class="app wrap" style="--c: var(--purple)">
+      <div class="head">
+        <div>
+          <p class="label">02 · Banda</p>
+          <h2>StageKeys Play</h2>
+          <p class="lead">O que toca junto com você.</p>
+        </div>
+        <a class="btn" href="#">Baixar StageKeys Play</a>
+      </div>
+      <ol class="feats">
+        <li style="--c: var(--purple)"><b>Setlist</b>Andamento, compasso e tom de cada música, na ordem do show.</li>
+        <li style="--c: var(--yellow)"><b>Pads</b>Fundo contínuo em qualquer tom, troca junto com a música.</li>
+        <li style="--c: var(--orange)"><b>Click</b>Contagem de entrada, subdivisões e tap tempo.</li>
+        <li style="--c: var(--green)"><b>Bateria</b>Pads com loops e samples, cada um com sua cor.</li>
+      </ol>
+      <figure class="shot">
+        <img src="/img/stagekeys-play.png" width="2000" height="1310" alt="Janela do StageKeys Play com pads em Sol, click a 96 BPM e pads de bateria." loading="lazy">
+      </figure>
+    </section>
+
+    <section class="install wrap">
+      <p class="label" style="--c: var(--green)">Como instalar</p>
+      <h2>Não está na App Store (ainda).</h2>
+      <p class="lead">O download é direto, pelos botões acima. Na primeira vez o macOS desconfia, é normal.</p>
+      <ol class="steps">
+        <li style="--c: var(--cyan)">Abre o arquivo .dmg e arrasta o app para a pasta Aplicativos.</li>
+        <li style="--c: var(--orange)">Se o macOS bloquear, vai em Ajustes do Sistema, Privacidade e Segurança, e clica em <b>Abrir Mesmo Assim</b>.</li>
+        <li style="--c: var(--pink)">Pronto. Daí em diante abre normal.</li>
+      </ol>
+    </section>
+  </main>
+
+  <footer class="bottom wrap">
+    <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+    <span>Feito por hobby, para quem toca teclado.</span>
+    <span>2026</span>
+  </footer>
+
+  <script src="/piano.js" defer></script>
+</body>
+</html>

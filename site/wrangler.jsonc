@@ -1,0 +1,14 @@
+{
+  "name": "stagekeys-site",
+  "compatibility_date": "2026-10-16",
+  "assets": {
+    "directory": "./public"
+  },
+  "routes": [
+    { "pattern": "stagekeys.com.br", "custom_domain": true }
+  ],
+  "observability": {
+    "enabled": true,
+    "traces": { "enabled": true }
+  }
+}
