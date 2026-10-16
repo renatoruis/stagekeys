@@ -83,12 +83,22 @@ a {
 .bars i:nth-child(4) { height: 18px; background: var(--pink); }
 
 .chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: 6px 14px;
   border: 1px solid var(--line);
   border-radius: 999px;
   background: var(--panel);
   font-size: 13px;
   color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+a.chip:hover {
+  color: var(--text);
+  border-color: var(--dim);
 }
 
 /* shared bits */
@@ -162,6 +172,13 @@ h2 {
 
 .btn:active {
   transform: translateY(0);
+}
+
+.btn.ghost {
+  background: var(--raised);
+  border: 1px solid var(--line);
+  color: var(--text);
+  box-shadow: none;
 }
 
 .btn:focus-visible {
@@ -410,6 +427,30 @@ h2 {
   color: var(--text);
 }
 
+/* open source */
+
+.oss {
+  padding-bottom: 96px;
+}
+
+.oss .card {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 32px;
+  padding: 44px;
+  border: 1px solid var(--line);
+  border-radius: 28px;
+  background:
+    radial-gradient(500px 260px at 100% 100%, rgb(244 200 90 / 0.12), transparent 70%),
+    var(--panel);
+}
+
+.oss .lead {
+  max-width: 520px;
+}
+
 /* footer */
 
 .bottom {
@@ -466,6 +507,15 @@ h2 {
   .install {
     padding-top: 80px;
     padding-bottom: 80px;
+  }
+
+  .oss {
+    padding-bottom: 64px;
+  }
+
+  .oss .card {
+    padding: 30px 22px;
+    border-radius: 22px;
   }
 
   .bottom {

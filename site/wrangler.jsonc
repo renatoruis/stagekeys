@@ -1,11 +1,18 @@
 {
   "name": "stagekeys-site",
+  "main": "src/index.js",
   "compatibility_date": "2026-10-16",
   "assets": {
-    "directory": "./public"
+    "directory": "./public",
+    "binding": "ASSETS",
+    "run_worker_first": true
   },
+  "r2_buckets": [
+    { "binding": "SOUNDS", "bucket_name": "stagekeys-sounds" }
+  ],
   "routes": [
-    { "pattern": "stagekeys.com.br", "custom_domain": true }
+    { "pattern": "stagekeys.com.br", "custom_domain": true },
+    { "pattern": "www.stagekeys.com.br", "custom_domain": true }
   ],
   "observability": {
     "enabled": true,
