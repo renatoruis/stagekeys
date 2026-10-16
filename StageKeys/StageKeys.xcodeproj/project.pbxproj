@@ -44,6 +44,8 @@
 		D1000000000000000000002A /* StageKeysTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StageKeysTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3000000000000000000001A /* SoundLibrary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SoundLibrary.swift; sourceTree = "<group>"; };
 		F3000000000000000000002A /* LibraryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTests.swift; sourceTree = "<group>"; };
+		AB0000000000000000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		AB0000000000000000000004 /* AboutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 /* Begin PBXGroup section */
 		E45F76C2D80FAD483876517A /* Audio */ = {
@@ -98,6 +100,7 @@
 				C1D699F13F170C719B14A1EE /* AppModel.swift */,
 				152DB889B4BB32271F633344 /* StageKeysApp.swift */,
 				B15A13ACECE86FF5B996CE6C /* Info.plist */,
+				AB0000000000000000000001 /* Assets.xcassets */,
 				E45F76C2D80FAD483876517A /* Audio */,
 				1C22E2E5BDDBC63D373F4583 /* Engines */,
 				13CB9448904D13D14C47BDD4 /* Model */,
@@ -193,6 +196,7 @@
 				633740516CFFEC3D68EBDB0B /* VerticalFader.swift */,
 				BBE26DCFF8022A60269F668C /* LevelMeter.swift */,
 				D5C424C3A4B567D3CDF46DC8 /* PowerButton.swift */,
+				AB0000000000000000000004 /* AboutButton.swift */,
 				9DAF6A929E4D5C07CD962D15 /* SegmentButtons.swift */,
 			);
 			path = DS;
@@ -225,6 +229,7 @@
 			buildPhases = (
 				7A70D71C385290AF96BF1031 /* Sources */,
 				424153ED3CD079DB4DB459AF /* Frameworks */,
+				AB0000000000000000000003 /* Resources */,
 				5FEA283755AD6B6F32245425 /* Sync Resources */,
 			);
 			buildRules = ();
@@ -299,6 +304,16 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
+/* Begin PBXResourcesBuildPhase section */
+		AB0000000000000000000003 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AB0000000000000000000002 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 /* Begin PBXShellScriptBuildPhase section */
 		5FEA283755AD6B6F32245425 /* Sync Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -342,6 +357,7 @@
 				3900EE9DE1772E9CB3AA5E60 /* VerticalFader.swift in Sources */,
 				FF8E4DE23A78180C082BC792 /* LevelMeter.swift in Sources */,
 				961714BF83FFF09383A97307 /* PowerButton.swift in Sources */,
+				AB0000000000000000000005 /* AboutButton.swift in Sources */,
 				AE4BE146E8CF6444D4114985 /* SegmentButtons.swift in Sources */,
 				C29C6E9C0A0787A578622D10 /* PerformView.swift in Sources */,
 				2E96D5188005EA93B7F0BF67 /* TopBar.swift in Sources */,
@@ -422,6 +438,8 @@
 		F3000000000000000000001E /* SoundLibrary.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3000000000000000000001A /* SoundLibrary.swift */; };
 		F3000000000000000000002E /* LibraryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3000000000000000000002A /* LibraryTests.swift */; };
 		F3000000000000000000003E /* ResourceCatalog.swift in Sources */ = {isa = PBXBuildFile; fileRef = B8F0F2512DE2BD280D8D1FD4 /* ResourceCatalog.swift */; };
+		AB0000000000000000000002 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000001 /* Assets.xcassets */; };
+		AB0000000000000000000005 /* AboutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB0000000000000000000004 /* AboutButton.swift */; };
 /* End PBXBuildFile section */
 /* Begin XCBuildConfiguration section */
 		06DB87319F2818D2126BDA3E /* Debug */ = {

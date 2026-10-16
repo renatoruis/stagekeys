@@ -136,6 +136,7 @@ struct TopBar: View {
             if !model.liveMode {
                 PowerButton(on: model.learnOn, color: DS.yellow, symbol: "dot.radiowaves.left.and.right", label: "MIDI Learn", action: model.toggleLearn)
             }
+            AboutButton(appName: "StageKeys Play", colors: [DS.purple, DS.yellow, DS.orange, DS.green])
             SettingsLink {
                 Image(systemName: "gearshape")
                     .font(.system(size: 12, weight: .medium))

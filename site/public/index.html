@@ -3,13 +3,16 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>StageKeys · apps para tocar teclado ao vivo no Mac</title>
-  <meta name="description" content="StageKeys e StageKeys Play: dois apps para tecladistas tocarem ao vivo. Só para macOS, download direto.">
+  <title>StageKeys · apps gratuitos para tocar teclado ao vivo no Mac</title>
+  <meta name="description" content="StageKeys e StageKeys Play: dois apps gratuitos para tecladistas tocarem ao vivo, com timbres .sf2 baixados da nuvem. Só para macOS, download direto.">
   <meta property="og:title" content="StageKeys">
-  <meta property="og:description" content="Dois apps para tocar teclado ao vivo. Só para macOS.">
+  <meta property="og:description" content="Dois apps gratuitos para tocar teclado ao vivo. Só para macOS.">
   <meta property="og:url" content="https://stagekeys.com.br/">
   <meta property="og:type" content="website">
   <meta name="theme-color" content="#10131d">
+  <link rel="icon" href="/favicon.ico" sizes="32x32">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;600;700&display=swap">
@@ -21,25 +24,39 @@
       <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
       stagekeys
     </a>
+    <nav class="nav">
+    <a class="chip" href="mailto:renatoruis@gmail.com" data-modal="coffee">☕ Café</a>
     <a class="chip" href="https://github.com/renatoruis/stagekeys">
       <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
       GitHub
     </a>
+    </nav>
   </header>
 
   <main>
     <section class="hero wrap">
-      <p class="label" style="--c: var(--orange)">Projeto de hobby</p>
+      <p class="label" style="--c: var(--green)">Grátis · projeto de hobby</p>
       <h1>Pluga o teclado no Mac<br>e <em>vai tocar.</em></h1>
-      <p class="sub">Dois apps que fiz para uns amigos tecladistas: um cuida dos timbres, o outro de tudo que toca junto com você no palco.</p>
+      <p class="sub">Dois apps gratuitos que fiz para uns amigos tecladistas: um cuida dos timbres, o outro de tudo que toca junto com você no palco.</p>
       <div class="ctas">
-        <a class="btn" style="--c: var(--cyan)" href="https://github.com/renatoruis/stagekeys/releases/download/v1.0.0/StageKeys-1.0.0.dmg">Baixar StageKeys</a>
-        <a class="btn" style="--c: var(--purple)" href="https://github.com/renatoruis/stagekeys/releases/download/v1.0.0/StageKeysPlay-1.0.0.dmg">Baixar StageKeys Play</a>
+        <a class="btn" style="--c: var(--cyan)" href="https://github.com/renatoruis/stagekeys/releases/download/v1.0.1/StageKeys-1.0.1.dmg">Baixar StageKeys</a>
+        <a class="btn" style="--c: var(--purple)" href="https://github.com/renatoruis/stagekeys/releases/download/v1.0.1/StageKeysPlay-1.0.1.dmg">Baixar StageKeys Play</a>
       </div>
-      <p class="meta">Grátis · v1.0.0 · .dmg · macOS 14 ou mais recente · fora da App Store por enquanto</p>
+      <p class="meta">Grátis · v1.0.1 · .dmg · macOS 14 ou mais recente · fora da App Store por enquanto</p>
 
       <div class="piano" id="piano" aria-hidden="true"></div>
       <p class="hint">Clica nas teclas. Ou usa A S D F G H J K no seu teclado.</p>
+    </section>
+
+    <section class="free wrap">
+      <div class="card">
+        <p class="price">R$&nbsp;0</p>
+        <div>
+          <h2>É grátis. De verdade.</h2>
+          <p class="lead">Os dois apps e todos os timbres da biblioteca. Sem conta, sem assinatura e sem anúncio. Se quiser ajudar, paga um café.</p>
+        </div>
+        <a class="btn ghost" href="mailto:renatoruis@gmail.com" data-modal="coffee">☕ Pagar um café</a>
+      </div>
     </section>
 
     <section class="app wrap" style="--c: var(--cyan)">
@@ -49,17 +66,37 @@
           <h2>StageKeys</h2>
           <p class="lead">Os timbres do seu teclado, prontos para o show.</p>
         </div>
-        <a class="btn" href="https://github.com/renatoruis/stagekeys/releases/download/v1.0.0/StageKeys-1.0.0.dmg">Baixar StageKeys</a>
+        <a class="btn" href="https://github.com/renatoruis/stagekeys/releases/download/v1.0.1/StageKeys-1.0.1.dmg">Baixar StageKeys</a>
       </div>
       <ol class="feats">
         <li style="--c: var(--cyan)"><b>Quatro camadas</b>Cada uma com volume, filtro, compressor, reverb e espaço.</li>
         <li style="--c: var(--green)"><b>Tudo no MIDI</b>Qualquer knob ou botão pode ir para o seu controlador.</li>
-        <li style="--c: var(--orange)"><b>Biblioteca online</b>Pianos, Nord, pads, cordas. Baixa só o que vai usar.</li>
+        <li style="--c: var(--orange)"><b>Timbres .sf2</b>Baixa da biblioteca na nuvem ou importa os seus arquivos .sf2.</li>
         <li style="--c: var(--pink)"><b>Modo Live</b>Trava a edição na hora do show, para nada mudar sem querer.</li>
       </ol>
       <figure class="shot">
         <img src="/img/stagekeys.png" width="2000" height="1320" alt="Janela do StageKeys com quatro camadas de timbres: piano, piano elétrico, pad e cordas." loading="lazy">
       </figure>
+    </section>
+
+    <section class="cloud wrap">
+      <div>
+        <p class="label" style="--c: var(--orange)">Timbres na nuvem</p>
+        <h2>Baixa só o timbre que vai usar.</h2>
+        <p class="lead">Os timbres .sf2 ficam numa biblioteca na nuvem, e o StageKeys mostra tudo o que tem lá. Você escolhe e baixa só o que quiser, sem encher o Mac.</p>
+        <ul class="points">
+          <li style="--c: var(--cyan)">Entrou timbre novo na biblioteca? Ele aparece no app, sem precisar atualizar nada.</li>
+          <li style="--c: var(--orange)">Um clique para baixar, com o progresso no próprio timbre.</li>
+          <li style="--c: var(--pink)">Depois de baixado, funciona sem internet. Se o timbre for atualizado, o app avisa.</li>
+          <li style="--c: var(--green)">Tem seus próprios .sf2? Importa e usa junto com os da biblioteca.</li>
+        </ul>
+      </div>
+      <ul class="sounds" aria-hidden="true">
+        <li style="--c: var(--cyan)"><small>Nord · Piano</small>Royal Grand 3D<span class="state ok">Baixado</span></li>
+        <li style="--c: var(--orange)"><small>Nord · Pad</small>Pad 2<span class="state">Baixando</span><i class="bar"></i></li>
+        <li style="--c: var(--pink)"><small>Strings</small>Romance<span class="state up">Atualizar</span></li>
+        <li style="--c: var(--green)"><small>Electric Piano</small>Case 75<span class="state">Na nuvem</span></li>
+      </ul>
     </section>
 
     <p class="plus wrap"><span>+</span>Funcionam separados. Usa um, o outro, ou os dois juntos.</p>
@@ -71,7 +108,7 @@
           <h2>StageKeys Play</h2>
           <p class="lead">O que toca junto com você.</p>
         </div>
-        <a class="btn" href="https://github.com/renatoruis/stagekeys/releases/download/v1.0.0/StageKeysPlay-1.0.0.dmg">Baixar StageKeys Play</a>
+        <a class="btn" href="https://github.com/renatoruis/stagekeys/releases/download/v1.0.1/StageKeysPlay-1.0.1.dmg">Baixar StageKeys Play</a>
       </div>
       <ol class="feats">
         <li style="--c: var(--purple)"><b>Setlist</b>Andamento, compasso e tom de cada música, na ordem do show.</li>
@@ -113,9 +150,31 @@
   <footer class="bottom wrap">
     <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
     <span>Feito por hobby, para quem toca teclado.</span>
+    <a href="mailto:renatoruis@gmail.com" data-modal="coffee">Contato</a>
     <span>2026</span>
   </footer>
 
+  <dialog class="modal" id="coffee" aria-labelledby="coffee-title">
+    <form method="dialog">
+      <button class="close" aria-label="Fechar">×</button>
+    </form>
+    <p class="label" style="--c: var(--yellow)">Contato e café</p>
+    <h2 id="coffee-title">Bora conversar?</h2>
+    <p class="lead">Dúvida, ideia, timbre que você quer na biblioteca, ou só pra contar que usou no culto ou no show. E se o app te ajudou, um café via Pix é sempre bem-vindo.</p>
+    <div class="rows">
+      <div class="row" style="--c: var(--cyan)">
+        <span><small>E-mail</small>renatoruis@gmail.com</span>
+        <a class="btn" href="mailto:renatoruis@gmail.com?subject=StageKeys">Escrever</a>
+      </div>
+      <div class="row" style="--c: var(--green)">
+        <span><small>Chave Pix (e-mail)</small>renatoruis@gmail.com</span>
+        <button class="btn" type="button" data-copy="renatoruis@gmail.com">Copiar</button>
+      </div>
+    </div>
+    <p class="meta">Qualquer valor ajuda. Obrigado! ☕</p>
+  </dialog>
+
   <script src="/piano.js" defer></script>
+  <script src="/modal.js" defer></script>
 </body>
 </html>
