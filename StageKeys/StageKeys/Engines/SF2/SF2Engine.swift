@@ -6,12 +6,27 @@ import Foundation
 final class SF2Engine {
     static let partCount = KeySlot.slotCount
 
-    struct Stats {
-        var voices: [Int] = Array(repeating: 0, count: SF2Engine.partCount)
-        /// Fraction of the buffer period spent rendering all parts.
-        var load: Double = 0
-        /// Keys held down; notes ringing on the sustain pedal are not included.
-        var keys: [Set<Int>] = Array(repeating: [], count: SF2Engine.partCount)
+    /// Notes held down, one bit per key, split at note 64. Notes ringing on the sustain pedal are not included.
+    struct HeldKeys: Equatable {
+        var low: [UInt64]
+        var high: [UInt64]
+
+        /// First layer holding `note`, matching the order the on-screen keyboard paints.
+        func layer(holding note: Int) -> Int? {
+            let bit: UInt64
+            let words: [UInt64]
+            if note < 64 {
+                bit = 1 << UInt64(note)
+                words = low
+            } else {
+                bit = 1 << UInt64(note - 64)
+                words = high
+            }
+            for (index, word) in words.enumerated() where word & bit != 0 {
+                return index
+            }
+            return nil
+        }
     }
 
     /// Parts may listen to different inputs: any held pedal, and the first wheel away from rest.
@@ -32,8 +47,6 @@ final class SF2Engine {
         componentFlags: 0,
         componentFlagsMask: 0
     ))
-    private let space = SendBus(node: Supermassive.makeNode(), count: partCount)
-    var spaceNode: AVAudioUnit? { space.node }
     private var output: MotorOutput?
     private var timer: Timer?
     private(set) var graphRate = 44_100.0
@@ -47,15 +60,13 @@ final class SF2Engine {
         output.attach(limiter)
         output.connect(limiter, to: output.mixer, format: format)
         output.connect(bus, to: limiter, format: format)
-        space.install(on: output, to: bus, format: format)
-        for (index, part) in parts.enumerated() {
+        for part in parts {
             let source = Self.makeSource(part, format: format)
             let chain = EffectChain()
             output.attach(source)
-            chain.install(on: output, from: source, to: bus, format: format, sends: sends(index))
+            chain.install(on: output, from: source, to: bus, format: format)
             sources.append(source)
             chains.append(chain)
-            applySends(index)
         }
         timer = Timer.scheduledTimer(withTimeInterval: 0.25, repeats: true) { [weak self] _ in
             self?.collect()
@@ -72,27 +83,15 @@ final class SF2Engine {
         let format = graphFormat
         output.reconnect(limiter, to: output.mixer, format: format)
         output.reconnect(bus, to: limiter, format: format)
-        space.rewire(on: output, to: bus, format: format)
         for index in parts.indices {
             output.engine.disconnectNodeOutput(sources[index])
             output.engine.detach(sources[index])
             let source = Self.makeSource(parts[index], format: format)
             sources[index] = source
             output.attach(source)
-            chains[index].wire(on: output, from: source, to: bus, format: format, sends: sends(index))
-            applySends(index)
+            chains[index].wire(on: output, from: source, to: bus, format: format)
         }
         return true
-    }
-
-    /// Post-fader sends; their tails keep ringing after a send closes.
-    private func sends(_ index: Int) -> [AVAudioConnectionPoint] {
-        space.points(index)
-    }
-
-    private func applySends(_ index: Int) {
-        let source = sources.indices.contains(index) ? sources[index] : nil
-        space.apply(index, source: source)
     }
 
     var meterNodes: [AVAudioNode] { chains.map(\.reverb.avAudioNode) }
@@ -124,8 +123,6 @@ final class SF2Engine {
             $0.tuneCents = Float(((slot.tune ?? 0.5) - 0.5) * 100)
             $0.pan = Float(((slot.pan ?? 0.5) - 0.5) * 2)
         }
-        let source = sources.indices.contains(part) ? sources[part] : nil
-        space.setLevel(part, slot.space ?? 0, source: source)
         if chains.indices.contains(part) {
             chains[part].apply(
                 cutoff: slot.cutoff ?? 1, resonance: slot.resonance, compressor: slot.compressor ?? 0, reverb: slot.reverb ?? 0, rotary: slot.rotary,
@@ -169,20 +166,20 @@ final class SF2Engine {
         for part in parts { part.send(KeyEvent(kind: .panic)) }
     }
 
-    func stats() -> Stats {
-        var stats = Stats()
-        for (index, part) in parts.enumerated() {
+    func heldKeys() -> HeldKeys {
+        HeldKeys(low: parts.map { $0.report.keysLow }, high: parts.map { $0.report.keysHigh })
+    }
+
+    /// Voices in use, and the fraction of the buffer period spent rendering all parts.
+    func load() -> (voices: Int, load: Double) {
+        var voices = 0
+        var load = 0.0
+        for part in parts {
             let report = part.report
-            stats.voices[index] = Int(report.activeVoices)
-            if report.bufferNanos > 0 { stats.load += report.renderNanos / report.bufferNanos }
-            var keys = Set<Int>()
-            for bit in 0..<64 {
-                if report.keysLow & (1 << UInt64(bit)) != 0 { keys.insert(bit) }
-                if report.keysHigh & (1 << UInt64(bit)) != 0 { keys.insert(bit + 64) }
-            }
-            stats.keys[index] = keys
+            voices += Int(report.activeVoices)
+            if report.bufferNanos > 0 { load += report.renderNanos / report.bufferNanos }
         }
-        return stats
+        return (voices, load)
     }
 
     func controllers() -> Controllers {

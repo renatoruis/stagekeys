@@ -3,12 +3,18 @@ import Foundation
 /// Audio engines, each with its own output route.
 enum Motor: String, Codable, CaseIterable, Identifiable {
     case keys
+    case pads
+    case drums
+    case metronome
 
     var id: String { rawValue }
 
     var title: String {
         switch self {
         case .keys: "Keys"
+        case .pads: "Pads"
+        case .drums: "Drums"
+        case .metronome: "Click"
         }
     }
 }
@@ -45,7 +51,7 @@ struct MotorRoute: Codable, Equatable {
     var pick: ChannelPick = .stereo
 }
 
-enum BindingTarget: String, Codable, CaseIterable {
+enum BindingTarget: String, Codable, CaseIterable, Hashable {
     case keysVolume
     case keysToggle
     case keysPanic
@@ -55,7 +61,6 @@ enum BindingTarget: String, Codable, CaseIterable {
     case keysHigh
     case keysCompressor
     case keysReverb
-    case keysSpace
     case keysPan
     case keysTune
     case keysModToggle
@@ -66,11 +71,23 @@ enum BindingTarget: String, Codable, CaseIterable {
     case transposeDown
     case transposeUp
     case masterVolume
+    case padVolume
+    case padToggle
+    case drumNote
+    case metroToggle
+    case nextSong
+    case previousSong
+    case padsTransport
+    case padCutoff
+    case padMaster
+    case countIn
+    case showTab
+    case keysTab
 
     /// Continuous targets follow CC values; the rest fire on note-on, program change or CC >= 64.
     var continuous: Bool {
         switch self {
-        case .keysVolume, .masterVolume: true
+        case .keysVolume, .masterVolume, .padVolume, .padCutoff, .padMaster: true
         default: isLayerKnob
         }
     }
@@ -78,7 +95,7 @@ enum BindingTarget: String, Codable, CaseIterable {
     /// Per-layer effect knobs, which MIDI CC values drive directly.
     var isLayerKnob: Bool {
         switch self {
-        case .keysCutoff, .keysResonance, .keysLow, .keysHigh, .keysCompressor, .keysReverb, .keysSpace, .keysPan, .keysTune: true
+        case .keysCutoff, .keysResonance, .keysLow, .keysHigh, .keysCompressor, .keysReverb, .keysPan, .keysTune: true
         default: false
         }
     }
@@ -94,7 +111,6 @@ enum BindingTarget: String, Codable, CaseIterable {
         case .keysHigh: "Keys \(index + 1) high EQ"
         case .keysCompressor: "Keys \(index + 1) compressor"
         case .keysReverb: "Keys \(index + 1) reverb"
-        case .keysSpace: "Keys \(index + 1) space"
         case .keysPan: "Keys \(index + 1) pan"
         case .keysTune: "Keys \(index + 1) tune"
         case .keysModToggle: "Keys \(index + 1) mod wheel to cutoff"
@@ -104,7 +120,19 @@ enum BindingTarget: String, Codable, CaseIterable {
         case .keysOctaveUp: "Keys \(index + 1) octave up"
         case .transposeDown: "Transpose down"
         case .transposeUp: "Transpose up"
-        case .masterVolume: "Master volume"
+        case .masterVolume: "Keys master"
+        case .padVolume: "Pad \(index + 1) volume"
+        case .padToggle: "Pad \(index + 1) on/off"
+        case .padCutoff: "Pad \(index + 1) cutoff"
+        case .padsTransport: "Pads play/stop"
+        case .padMaster: "Pads master"
+        case .countIn: "Count-in"
+        case .drumNote: "Drum pad \(index + 1)"
+        case .metroToggle: "Click on/off"
+        case .nextSong: "Next song"
+        case .previousSong: "Previous song"
+        case .showTab: "Show tab"
+        case .keysTab: "Keys tab"
         }
     }
 }
@@ -128,7 +156,7 @@ struct MIDIMatch: Codable, Equatable, Hashable {
         let base: String
         switch kind {
         case .cc: base = "CC \(number)"
-        case .note: base = "Note \(ResourceCatalog.noteName(number))"
+        case .note: base = "Note \(MIDINote.name(number))"
         case .program: base = "PC \(number + 1)"
         }
         return channel >= 0 ? "\(base) · ch\(channel + 1)" : base
@@ -153,10 +181,15 @@ struct Rig: Equatable {
     var enabledMIDISources: [Int32] = []
     var seenMIDISources: [Int32] = []
     var midiSourcesKnown: Bool = false
-    /// Inputs that play the SF2 keys. Empty: every enabled input plays them.
+    /// Inputs that play the SF2 keys. Empty: every enabled input plays them and moves the pad key.
     var keyboardSourceIDs: [Int32] = []
+    var clockDestinationID: Int32?
     var bindings: [MIDIBinding] = []
+    var currentSetID: UUID?
     var liveMode = false
+    var setName = "Set 1"
+    /// Lights the Launchkey drum pads from the pad colors.
+    var padLights = true
 
     func route(for motor: Motor) -> MotorRoute {
         routes[motor.rawValue] ?? MotorRoute()
@@ -184,26 +217,97 @@ struct Rig: Equatable {
     mutating func clearBinding(target: BindingTarget, index: Int) {
         bindings.removeAll { $0.target == target && $0.index == index }
     }
+
+    /// Notes the eight left pads send once the Launchkey is in DAW drum mode, pads 1–4 then 5–8.
+    static let launchkeyDrumNotes = [40, 41, 42, 43, 36, 37, 38, 39]
+    static let launchkeyDrumChannel = 9
+
+    /// Pads whose mapping will not light a Launchkey drum pad.
+    func drumPadsOffLaunchkey(_ pads: [Int]) -> [Int] {
+        pads.filter { index in
+            guard let binding = binding(for: .drumNote, index: index), binding.match.kind == .note else { return true }
+            let channel = binding.match.channel
+            let onDrumChannel = channel == Self.launchkeyDrumChannel || channel == -1
+            return !(36...51).contains(binding.match.number) || !onDrumChannel
+        }
+    }
+
+    /// Maps drum pads 1–8 to the eight left Launchkey pads. Returns bindings it took from other targets.
+    @discardableResult
+    mutating func mapLaunchkeyDrums() -> [MIDIBinding] {
+        var replaced: [MIDIBinding] = []
+        for (index, note) in Self.launchkeyDrumNotes.enumerated() {
+            let binding = MIDIBinding(
+                target: .drumNote,
+                index: index,
+                match: MIDIMatch(kind: .note, number: note, channel: Self.launchkeyDrumChannel)
+            )
+            replaced.append(contentsOf: setBinding(binding))
+        }
+        return replaced
+    }
+
+    /// First launch of the single app: keeps both rigs. A control mapped in both keeps firing both.
+    static func merged(keys: Rig?, show: Rig?) -> Rig {
+        var rig = Rig()
+        rig.bufferFrames = keys?.bufferFrames ?? show?.bufferFrames ?? 128
+        if let route = keys?.routes[Motor.keys.rawValue] {
+            rig.routes[Motor.keys.rawValue] = route
+        }
+        for motor in [Motor.pads, .drums, .metronome] {
+            if let route = show?.routes[motor.rawValue] {
+                rig.routes[motor.rawValue] = route
+            }
+        }
+        rig.enabledMIDISources = Self.unionIDs(keys?.enabledMIDISources, show?.enabledMIDISources)
+        rig.seenMIDISources = Self.unionIDs(keys?.seenMIDISources, show?.seenMIDISources)
+        rig.keyboardSourceIDs = Self.unionIDs(keys?.keyboardSourceIDs, show?.keyboardSourceIDs)
+        rig.midiSourcesKnown = (keys?.midiSourcesKnown ?? false) || (show?.midiSourcesKnown ?? false)
+        rig.liveMode = (keys?.liveMode ?? false) || (show?.liveMode ?? false)
+        rig.clockDestinationID = show?.clockDestinationID
+        rig.currentSetID = show?.currentSetID
+        rig.setName = show?.setName ?? "Set 1"
+        var bindings: [MIDIBinding] = []
+        for binding in (keys?.bindings ?? []) + (show?.bindings ?? []) where !bindings.contains(binding) {
+            bindings.append(binding)
+        }
+        rig.bindings = bindings
+        return rig
+    }
+
+    private static func unionIDs(_ first: [Int32]?, _ second: [Int32]?) -> [Int32] {
+        var out: [Int32] = []
+        var seen = Set<Int32>()
+        for id in (first ?? []) + (second ?? []) where seen.insert(id).inserted {
+            out.append(id)
+        }
+        return out
+    }
 }
 
 extension Rig: Codable {
     enum CodingKeys: String, CodingKey {
         case bufferFrames, routes, enabledMIDISources, seenMIDISources, midiSourcesKnown, keyboardSourceIDs
-        case bindings, liveMode
+        case clockDestinationID, bindings, currentSetID, liveMode, setName, padLights
     }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         bufferFrames = try container.decodeIfPresent(Int.self, forKey: .bufferFrames) ?? 128
         routes = try container.decodeIfPresent([String: MotorRoute].self, forKey: .routes) ?? [:]
-        routes = routes.filter { $0.key == Motor.keys.rawValue }
+        let allowed = Set(Motor.allCases.map(\.rawValue))
+        routes = routes.filter { allowed.contains($0.key) }
         enabledMIDISources = try container.decodeIfPresent([Int32].self, forKey: .enabledMIDISources) ?? []
         seenMIDISources = try container.decodeIfPresent([Int32].self, forKey: .seenMIDISources) ?? []
         midiSourcesKnown = try container.decodeIfPresent(Bool.self, forKey: .midiSourcesKnown) ?? false
         keyboardSourceIDs = try container.decodeIfPresent([Int32].self, forKey: .keyboardSourceIDs) ?? []
+        clockDestinationID = try container.decodeIfPresent(Int32.self, forKey: .clockDestinationID)
         let rawBindings = try container.decodeIfPresent([StoredBinding].self, forKey: .bindings) ?? []
         bindings = rawBindings.compactMap(\.binding)
+        currentSetID = try container.decodeIfPresent(UUID.self, forKey: .currentSetID)
         liveMode = try container.decodeIfPresent(Bool.self, forKey: .liveMode) ?? false
+        setName = try container.decodeIfPresent(String.self, forKey: .setName) ?? "Set 1"
+        padLights = try container.decodeIfPresent(Bool.self, forKey: .padLights) ?? true
     }
 
     func encode(to encoder: Encoder) throws {
@@ -214,12 +318,16 @@ extension Rig: Codable {
         try container.encode(seenMIDISources, forKey: .seenMIDISources)
         try container.encode(midiSourcesKnown, forKey: .midiSourcesKnown)
         try container.encode(keyboardSourceIDs, forKey: .keyboardSourceIDs)
+        try container.encodeIfPresent(clockDestinationID, forKey: .clockDestinationID)
         try container.encode(bindings, forKey: .bindings)
+        try container.encodeIfPresent(currentSetID, forKey: .currentSetID)
         try container.encode(liveMode, forKey: .liveMode)
+        try container.encode(setName, forKey: .setName)
+        try container.encode(padLights, forKey: .padLights)
     }
 }
 
-/// Bindings whose target no longer exists (pads, drums, click, songs) are dropped on load.
+/// Bindings whose target no longer exists are dropped on load.
 private struct StoredBinding: Decodable {
     var target: String
     var index: Int

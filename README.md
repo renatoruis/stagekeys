@@ -1,9 +1,13 @@
 # StageKeys
 
-Two small macOS apps for playing keyboard live. A hobby project, made to help a few friends who play keys.
+One macOS app for playing keyboard live. A hobby project, made to help a few friends who play keys.
 
-- **StageKeys**: the sounds of your keyboard. Up to four SF2 layers, each with volume, filter, compressor, reverb and space. Every knob and button can be mapped to MIDI, and sounds come from an online library.
-- **StageKeys Play**: what plays along with you. Setlist with tempo, time signature and key, continuous pads in any key, click with count-in and tap tempo, and drum pads with loops and samples.
+Two tabs. Both audio engines stay running; the tab only changes the screen.
+
+- **Show**: setlist with tempo, time signature and key, continuous pads in any key, click with count-in and tap tempo, and drum pads.
+- **Keys**: up to four SF2 layers, each with volume, filter, compressor and reverb.
+
+Every knob and button can be mapped to MIDI. Switch tabs with ⌘1 and ⌘2, or a MIDI binding. Sounds come from an online library.
 
 Site: [stagekeys.com.br](https://stagekeys.com.br)
 
@@ -12,9 +16,9 @@ Site: [stagekeys.com.br](https://stagekeys.com.br)
 
 ## Download
 
-Get the `.dmg` files from the [latest release](https://github.com/renatoruis/stagekeys/releases/latest). macOS 14 or later.
+Get the `.dmg` from the [latest release](https://github.com/renatoruis/stagekeys/releases/latest). macOS 14 or later.
 
-The apps are not on the App Store, but they are signed and notarized by Apple, so macOS opens them normally.
+The app is not on the App Store, but it is signed and notarized by Apple, so macOS opens it normally.
 
 ## Building
 
@@ -22,12 +26,9 @@ Developed with Xcode 26.
 
 ```sh
 open StageKeys/StageKeys.xcodeproj
-open StageKeysPlay/StageKeysPlay.xcodeproj
 ```
 
-Code shared by both apps lives in `Shared/`.
-
-StageKeys lists and downloads `.sf2` files from the URL in `StageKeysSoundsURL` (`StageKeys/StageKeys/Info.plist`). During development, set `STAGEKEYS_SOUNDS` to a local folder of `.sf2` files instead. File names follow `Category - Name.sf2` or `Category - Subcategory - Name.sf2`; `StageKeys/scripts/check-sound-names.py` checks a folder before upload.
+StageKeys lists and downloads `.sf2` files from the URL in `StageKeysSoundsURL` (`StageKeys/StageKeys/Info.plist`). During development, set `STAGEKEYS_SOUNDS` to a local folder of `.sf2` files instead. Set `STAGEKEYS_RESOURCES` to a folder that contains `Pads` when the bundled `StageLibrary` is not the one you want. File names follow `Category - Name.sf2` or `Category - Subcategory - Name.sf2`; `StageKeys/scripts/check-sound-names.py` checks a folder before upload.
 
 The site in `site/` is a static page deployed with Cloudflare Workers (`npx wrangler deploy`).
 
@@ -37,4 +38,4 @@ Issues and pull requests are welcome. Keep changes small and focused, and follow
 
 ## License
 
-[MIT](LICENSE). Valhalla Supermassive (`*/Plugins/ValhallaSupermassive.component`) is a free plugin by [Valhalla DSP](https://valhalladsp.com) and is not covered by this license.
+[MIT](LICENSE).

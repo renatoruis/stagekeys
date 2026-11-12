@@ -16,8 +16,6 @@ struct KeySlot: Codable, Equatable {
     /// Shelving EQ, 0.5 is flat.
     var low: Double?
     var high: Double?
-    /// Send into Valhalla Supermassive.
-    var space: Double?
     /// Octave shift of this layer, on top of the global transpose.
     var octave: Int = 0
     /// The mod wheel drives this layer's Cutoff knob.
@@ -47,6 +45,18 @@ struct KeyState: Codable, Equatable {
     /// Master fader, before the output limiter; 1 is unity gain.
     var master: Double = 1
 
+    /// Below this, a fader counts as off.
+    static let silentLevel = 0.02
+
+    /// Why the Keys cannot sound right now, or nil. A single layer at zero is a normal mix choice.
+    static func silentReason(_ state: KeyState) -> String? {
+        if state.master < silentLevel { return "Keys master at 0" }
+        let active = state.keySlots.filter { $0.fileID != nil && $0.enabled }
+        if active.isEmpty { return nil }
+        if active.allSatisfy({ $0.volume < silentLevel }) { return "All Keys layers at 0" }
+        return nil
+    }
+
     func normalized() -> KeyState {
         var copy = self
         if copy.keySlots.count < KeySlot.slotCount {
@@ -61,7 +71,7 @@ struct KeyState: Codable, Equatable {
 
 extension KeySlot {
     enum CodingKeys: String, CodingKey {
-        case fileID, bank, program, enabled, volume, cutoff, resonance, compressor, reverb, rotary, low, high, space, octave, modCutoff, sustain, velocity, inputID, channel, pan, tune, bend
+        case fileID, bank, program, enabled, volume, cutoff, resonance, compressor, reverb, rotary, low, high, octave, modCutoff, sustain, velocity, inputID, channel, pan, tune, bend
     }
 
     init(from decoder: Decoder) throws {
@@ -82,7 +92,6 @@ extension KeySlot {
         rotary = try container.decodeIfPresent(Int.self, forKey: .rotary) ?? 0
         low = try effect(.low, neutral: 0.5)
         high = try effect(.high, neutral: 0.5)
-        space = try effect(.space, neutral: 0)
         octave = try container.decodeIfPresent(Int.self, forKey: .octave) ?? 0
         modCutoff = try container.decodeIfPresent(Bool.self, forKey: .modCutoff) ?? false
         sustain = try container.decodeIfPresent(Bool.self, forKey: .sustain) ?? true
@@ -108,7 +117,6 @@ extension KeySlot {
         try container.encode(rotary, forKey: .rotary)
         try container.encodeIfPresent(low, forKey: .low)
         try container.encodeIfPresent(high, forKey: .high)
-        try container.encodeIfPresent(space, forKey: .space)
         try container.encode(octave, forKey: .octave)
         try container.encode(modCutoff, forKey: .modCutoff)
         try container.encode(sustain, forKey: .sustain)

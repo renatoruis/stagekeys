@@ -29,23 +29,22 @@ final class EffectChain {
         rotary = made?.unit
     }
 
-    func install(on output: MotorOutput, from source: AVAudioNode, to target: AVAudioNode, format: AVAudioFormat?, sends: [AVAudioConnectionPoint] = []) {
+    func install(on output: MotorOutput, from source: AVAudioNode, to target: AVAudioNode, format: AVAudioFormat?) {
         output.attach(ladder.avAudioNode)
         output.attach(filter)
         output.attach(reverb.avAudioNode)
         if let compressor { output.attach(compressor) }
         if let rotaryNode { output.attach(rotaryNode) }
-        wire(on: output, from: source, to: target, format: format, sends: sends)
+        wire(on: output, from: source, to: target, format: format)
     }
 
     /// Connects (or reconnects, e.g. after a sample-rate change) source → chain → target.
-    /// `sends` also receive the source, before the chain.
-    func wire(on output: MotorOutput, from source: AVAudioNode, to target: AVAudioNode, format: AVAudioFormat?, sends: [AVAudioConnectionPoint] = []) {
+    func wire(on output: MotorOutput, from source: AVAudioNode, to target: AVAudioNode, format: AVAudioFormat?) {
         for node in [source, rotaryNode, ladder.avAudioNode, filter, compressor, reverb.avAudioNode].compactMap({ $0 }) {
             output.engine.disconnectNodeOutput(node)
         }
         let head: AVAudioNode = rotaryNode ?? ladder.avAudioNode
-        output.engine.connect(source, to: [AVAudioConnectionPoint(node: head, bus: 0)] + sends, fromBus: 0, format: format)
+        output.connect(source, to: head, format: format)
         if let rotaryNode {
             output.connect(rotaryNode, to: ladder.avAudioNode, format: format)
         }

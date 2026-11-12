@@ -1,4 +1,5 @@
 import XCTest
+@testable import StageKeys
 
 final class SF2Tests: XCTestCase {
     private let rate = 48_000.0
@@ -192,5 +193,13 @@ final class SF2Tests: XCTestCase {
         let y0 = values[best - 1], y1 = values[best], y2 = values[best + 1]
         let d = Double((y0 - y2) / (2 * (y0 - 2 * y1 + y2)))
         return (rate / (Double(best) + (d.isFinite ? d : 0)), bestR)
+    }
+
+    func testHeldKeysLayer() {
+        let note60 = SF2Engine.HeldKeys(low: [0, 0, 1 << 60, 0], high: [0, 0, 0, 0])
+        XCTAssertEqual(note60.layer(holding: 60), 2)
+        let note100 = SF2Engine.HeldKeys(low: [0, 0, 0, 0], high: [0, 1 << (100 - 64), 0, 1 << (100 - 64)])
+        XCTAssertEqual(note100.layer(holding: 100), 1)
+        XCTAssertNil(note100.layer(holding: 61))
     }
 }

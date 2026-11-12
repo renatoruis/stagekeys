@@ -8,7 +8,7 @@ struct SoundButton: View {
     @State private var open = false
 
     var body: some View {
-        let font = model.catalog.soundFont(slot.fileID)
+        let font = model.sf2Catalog.soundFont(slot.fileID)
         Button { open = true } label: {
             HStack(spacing: DS.space2) {
                 Image(systemName: SoundPicker.symbol(font?.subcategory ?? font?.category))
@@ -69,26 +69,26 @@ struct SoundPicker: View {
     private var color: Color { DS.keyColors[index % DS.keyColors.count] }
 
     private var entries: [SoundEntry] {
-        let fonts = model.catalog.soundFonts
+        let fonts = model.sf2Catalog.soundFonts
         let remote = Dictionary(model.sounds.remote.map { ("sf2/\($0.file)", $0) }) { first, _ in first }
         let local = fonts.map { font in
             SoundEntry(id: font.id, name: font.name, category: font.category, subcategory: font.subcategory, font: font, remote: remote[font.id])
         }
         let ids = Set(fonts.map(\.id))
         let online = remote.filter { !ids.contains($0.key) }.map { id, sound in
-            let parsed = ResourceCatalog.parseName((sound.file as NSString).deletingPathExtension)
+            let parsed = SF2Catalog.parseName((sound.file as NSString).deletingPathExtension)
             return SoundEntry(id: id, name: parsed.name, category: parsed.category, subcategory: parsed.subcategory, remote: sound)
         }
         return (local + online).sorted { $0.id < $1.id }
     }
 
     private func categories(_ entries: [SoundEntry]) -> [String] {
-        let present = ResourceCatalog.orderedCategories(Set(entries.map(\.category)))
-        return present.contains(ResourceCatalog.importedCategory) ? present : present + [ResourceCatalog.importedCategory]
+        let present = SF2Catalog.orderedCategories(Set(entries.map(\.category)))
+        return present.contains(SF2Catalog.importedCategory) ? present : present + [SF2Catalog.importedCategory]
     }
 
     private func subcategories(_ item: String, _ entries: [SoundEntry]) -> [String] {
-        ResourceCatalog.orderedCategories(Set(entries.filter { $0.category == item }.compactMap(\.subcategory)))
+        SF2Catalog.orderedCategories(Set(entries.filter { $0.category == item }.compactMap(\.subcategory)))
     }
 
     var body: some View {
@@ -102,7 +102,7 @@ struct SoundPicker: View {
                     .background(DS.bgApp)
                 Rectangle().fill(DS.borderSoft).frame(width: 1)
                 Group {
-                    if let font = model.catalog.soundFonts.first(where: { $0.id == openFontID }) {
+                    if let font = model.sf2Catalog.soundFonts.first(where: { $0.id == openFontID }) {
                         presetList(font)
                     } else {
                         fontGrid(entries)
@@ -118,11 +118,11 @@ struct SoundPicker: View {
         .preferredColorScheme(.dark)
         .onAppear {
             model.sounds.refreshIfStale()
-            if let font = model.catalog.soundFont(slot.fileID) {
+            if let font = model.sf2Catalog.soundFont(slot.fileID) {
                 category = font.category
                 if font.presets.count > 1 { openFontID = font.id }
             } else if let id = slot.fileID, id.hasPrefix("sf2/") {
-                category = ResourceCatalog.parseName(((id as NSString).lastPathComponent as NSString).deletingPathExtension).category
+                category = SF2Catalog.parseName(((id as NSString).lastPathComponent as NSString).deletingPathExtension).category
             }
         }
         .onChange(of: query) { _, text in
@@ -192,7 +192,7 @@ struct SoundPicker: View {
                     .padding(.horizontal, DS.space2)
                     .padding(.top, DS.space3)
                     .padding(.bottom, 2)
-                ForEach(categories(entries).filter { $0 != ResourceCatalog.importedCategory }, id: \.self) { item in
+                ForEach(categories(entries).filter { $0 != SF2Catalog.importedCategory }, id: \.self) { item in
                     sidebarRow(title: item, symbol: Self.symbol(item), count: entries.filter { $0.category == item }.count, value: item)
                     ForEach(subcategories(item, entries), id: \.self) { sub in
                         sidebarRow(
@@ -209,10 +209,10 @@ struct SoundPicker: View {
                     .padding(.top, DS.space3)
                     .padding(.bottom, 2)
                 sidebarRow(
-                    title: ResourceCatalog.importedCategory,
-                    symbol: Self.symbol(ResourceCatalog.importedCategory),
-                    count: entries.filter { $0.category == ResourceCatalog.importedCategory }.count,
-                    value: ResourceCatalog.importedCategory
+                    title: SF2Catalog.importedCategory,
+                    symbol: Self.symbol(SF2Catalog.importedCategory),
+                    count: entries.filter { $0.category == SF2Catalog.importedCategory }.count,
+                    value: SF2Catalog.importedCategory
                 )
             }
             .padding(DS.space2)
@@ -221,7 +221,7 @@ struct SoundPicker: View {
 
     private func sidebarRow(title: String, symbol: String, count: Int, value: String?, sub: String? = nil) -> some View {
         let active = category == value && subcategory == sub && openFontID == nil && query.isEmpty
-        let current = model.catalog.soundFont(slot.fileID)
+        let current = model.sf2Catalog.soundFont(slot.fileID)
         let holdsCurrent = value != nil && current?.category == value && (sub == nil || current?.subcategory == sub)
         return Button {
             category = value
@@ -482,7 +482,7 @@ struct SoundPicker: View {
                 Text("No sounds match \u{201C}\(query)\u{201D}.")
                     .font(.system(size: 13))
                     .foregroundStyle(DS.textSecondary)
-            } else if category != ResourceCatalog.importedCategory {
+            } else if category != SF2Catalog.importedCategory {
                 Image(systemName: "icloud")
                     .font(.system(size: 26, weight: .light))
                     .foregroundStyle(DS.textMuted)
@@ -493,7 +493,7 @@ struct SoundPicker: View {
                     .font(.dsLabel)
                     .foregroundStyle(DS.textMuted)
             } else {
-                Image(systemName: Self.symbol(ResourceCatalog.importedCategory))
+                Image(systemName: Self.symbol(SF2Catalog.importedCategory))
                     .font(.system(size: 26, weight: .light))
                     .foregroundStyle(DS.textMuted)
                 Text("No imported sounds yet.")
@@ -586,7 +586,7 @@ struct SoundPicker: View {
         case "Accordion": "rectangle.split.3x1"
         case "FX": "sparkles"
         case "Collection": "square.stack.3d.up"
-        case ResourceCatalog.importedCategory: "tray.and.arrow.down"
+        case SF2Catalog.importedCategory: "tray.and.arrow.down"
         default: "music.note"
         }
     }

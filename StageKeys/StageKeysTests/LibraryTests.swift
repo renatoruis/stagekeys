@@ -1,4 +1,5 @@
 import XCTest
+@testable import StageKeys
 
 final class LibraryTests: XCTestCase {
     private func page(_ objects: [(String, Int, String)], next: String?) -> Data {
@@ -30,27 +31,27 @@ final class LibraryTests: XCTestCase {
     }
 
     func testParseName() {
-        XCTAssertTrue(ResourceCatalog.parseName("Piano - Concert Grand") == ("Piano", nil, "Concert Grand"))
-        XCTAssertTrue(ResourceCatalog.parseName("Nord - Piano - GP Grand") == ("Nord", "Piano", "GP Grand"))
-        XCTAssertTrue(ResourceCatalog.parseName("Loose") == ("Other", nil, "Loose"))
-        XCTAssertEqual(ResourceCatalog.orderedCategories(["Yamaha", "Piano", "Nord", "Collection"]), ["Nord", "Piano", "Collection", "Yamaha"])
+        XCTAssertTrue(SF2Catalog.parseName("Piano - Concert Grand") == ("Piano", nil, "Concert Grand"))
+        XCTAssertTrue(SF2Catalog.parseName("Nord - Piano - GP Grand") == ("Nord", "Piano", "GP Grand"))
+        XCTAssertTrue(SF2Catalog.parseName("Loose") == ("Other", nil, "Loose"))
+        XCTAssertEqual(SF2Catalog.orderedCategories(["Yamaha", "Piano", "Nord", "Collection"]), ["Nord", "Piano", "Collection", "Yamaha"])
     }
 
     func testNordRenames() {
-        XCTAssertEqual(ResourceCatalog.renamed.count, 7)
-        for (old, new) in ResourceCatalog.renamed {
+        XCTAssertEqual(SF2Catalog.renamed.count, 7)
+        for (old, new) in SF2Catalog.renamed {
             XCTAssertTrue(old.hasPrefix("sf2/") && new.hasPrefix("sf2/Nord - "), old)
             let stem = ((new as NSString).lastPathComponent as NSString).deletingPathExtension
-            XCTAssertNotNil(ResourceCatalog.parseName(stem).subcategory, new)
+            XCTAssertNotNil(SF2Catalog.parseName(stem).subcategory, new)
         }
-        XCTAssertEqual(ResourceCatalog.renamed["sf2/Piano - GP Grand.sf2"], "sf2/Nord - Piano - GP Grand.sf2")
+        XCTAssertEqual(SF2Catalog.renamed["sf2/Piano - GP Grand.sf2"], "sf2/Nord - Piano - GP Grand.sf2")
     }
 
     func testPresetNames() {
-        XCTAssertTrue(ResourceCatalog.isHeading("   //EltonLirakeys"))
-        XCTAssertTrue(ResourceCatalog.isHeading("___________________"))
-        XCTAssertTrue(ResourceCatalog.isHeading("Desenvolvido Por"))
-        XCTAssertFalse(ResourceCatalog.isHeading("KITWorshipLirakeys"))
-        XCTAssertEqual(ResourceCatalog.cleanPresetName("Royal Grand 3D - No"), "Royal Grand 3D")
+        XCTAssertTrue(SF2Catalog.isHeading("   //EltonLirakeys"))
+        XCTAssertTrue(SF2Catalog.isHeading("___________________"))
+        XCTAssertTrue(SF2Catalog.isHeading("Desenvolvido Por"))
+        XCTAssertFalse(SF2Catalog.isHeading("KITWorshipLirakeys"))
+        XCTAssertEqual(SF2Catalog.cleanPresetName("Royal Grand 3D - No"), "Royal Grand 3D")
     }
 }

@@ -52,7 +52,7 @@ struct AudioView: View {
                             set: { _ in model.toggleMIDISource(source.id) }
                         ))
                         .frame(width: 320, alignment: .leading)
-                        Toggle("Plays Keys", isOn: Binding(
+                        Toggle("Keyboard", isOn: Binding(
                             get: { model.rig.keyboardSourceIDs.contains(source.id) },
                             set: { _ in model.toggleKeyboardSource(source.id) }
                         ))
@@ -61,10 +61,30 @@ struct AudioView: View {
                     .disabled(model.liveMode)
                 }
                 Text(model.rig.keyboardSourceIDs.isEmpty
-                     ? "No keyboard chosen: every input plays Keys."
-                     : "Keyboards play Keys. The other inputs only control the app.")
+                     ? "No keyboard chosen: every input plays Keys and moves the pad key."
+                     : "Keyboards play the Keys layers and never move the pad key. Other inputs only control the app and move the pad key.")
                     .font(.dsLabel)
                     .foregroundStyle(DS.textMuted)
+                if model.midiDestinations.contains(where: { $0.name.contains("Launchkey") && $0.name.contains("DAW In") }) {
+                    Toggle("Light Launchkey pads", isOn: Binding(
+                        get: { model.rig.padLights },
+                        set: { model.setPadLights($0) }
+                    ))
+                    .disabled(model.liveMode)
+                    Text("Pad colors follow the drum pads. Needs the Launchkey DAW port.")
+                        .font(.dsLabel)
+                        .foregroundStyle(DS.textMuted)
+                    if !model.darkDrumPads.isEmpty {
+                        let numbers = model.darkDrumPads.map { String($0 + 1) }.joined(separator: ", ")
+                        Text("Pads \(numbers) stay dark: their MIDI mapping is not a Launchkey drum pad.")
+                            .font(.dsLabel)
+                            .foregroundStyle(DS.yellow)
+                        TextButton(title: "Map pads 1–8", symbol: "square.grid.2x2") { model.mapLaunchkeyDrumPads() }
+                            .fixedSize()
+                            .disabled(model.liveMode)
+                            .help("Maps drum pads 1–8 to the 8 left Launchkey pads. Replaces their current MIDI mapping.")
+                    }
+                }
                 Divider()
                 Text("MIDI mappings")
                     .font(.dsSection)
@@ -86,6 +106,19 @@ struct AudioView: View {
                             .disabled(model.liveMode)
                     }
                 }
+                Divider()
+                Text("MIDI clock output")
+                    .font(.dsSection)
+                    .foregroundStyle(DS.textSecondary)
+                Picker("Destination", selection: clockBinding) {
+                    Text("None").tag(Optional<Int32>.none)
+                    ForEach(model.midiDestinations) { destination in
+                        Text(destination.name).tag(Optional(destination.id))
+                    }
+                }
+                .labelsHidden()
+                .frame(maxWidth: 360)
+                .disabled(model.liveMode)
                 Divider()
                 Text("Keyboard shortcuts")
                     .font(.dsSection)
@@ -115,6 +148,9 @@ struct AudioView: View {
     }
 
     private static let shortcuts: [(keys: String, action: String)] = [
+        ("← / →", "Previous / next song"),
+        ("Space", "Click on / off"),
+        ("⌘1 / ⌘2", "Show / Keys tab"),
         ("⌘,", "Audio and MIDI settings"),
     ]
 
@@ -156,6 +192,10 @@ struct AudioView: View {
 
     private var bufferBinding: Binding<Int> {
         Binding(get: { model.rig.bufferFrames }, set: { model.setBuffer($0) })
+    }
+
+    private var clockBinding: Binding<Int32?> {
+        Binding(get: { model.rig.clockDestinationID }, set: { model.setClockDestination($0) })
     }
 
     private func deviceBinding(_ motor: Motor) -> Binding<String?> {

@@ -13,7 +13,6 @@ struct KeysView: View {
                     LearnChipFor(state: LearnState(model, .transposeUp, 0), prefix: "+ ")
                 }
                 KeysStatsView()
-                SpaceEditorButton(node: model.keys.spaceNode, title: "Keys")
                 if model.learnOn {
                     LearnChipFor(state: LearnState(model, .keysPanic, 0), prefix: "Panic ")
                 }
@@ -57,18 +56,18 @@ private struct MasterStrip: View {
                     color: DS.keys,
                     defaultValue: 1,
                     label: "Master",
-                    lit: model.isLit(.master, 0),
+                    lit: model.isLit(.keysMaster, 0),
                     desk: true,
                     mapped: model.rig.binding(for: .masterVolume, index: 0) != nil,
-                    onChange: { model.previewMaster($0) },
-                    onCommit: { model.setMaster($0) }
+                    onChange: { model.previewKeysMaster($0) },
+                    onCommit: { model.setKeysMaster($0) }
                 )
-                MeterBar(channel: MeterStore.Channel.master)
+                MeterBar(channel: MeterStore.Channel.keysMaster)
             }
             .frame(maxHeight: .infinity)
             Text("\(Int((master * 100).rounded()))")
                 .font(.dsValue)
-                .foregroundStyle(DS.textPrimary)
+                .foregroundStyle(master < KeyState.silentLevel ? DS.yellow : DS.textPrimary)
             if model.learnOn {
                 LearnChipFor(state: LearnState(model, .masterVolume, 0))
             }
@@ -109,11 +108,12 @@ private struct TransposeControl: View {
 /// Voices and audio load, polled from the render reports.
 private struct KeysStatsView: View {
     @Environment(AppModel.self) private var model
+    @Environment(\.meteringActive) private var active
 
     var body: some View {
-        TimelineView(.periodic(from: .now, by: 0.25)) { _ in
-            let stats = model.keys.stats()
-            let voices = stats.voices.reduce(0, +)
+        TimelineView(.animation(minimumInterval: 0.25, paused: !active)) { _ in
+            let stats = model.keys.load()
+            let voices = stats.voices
             let load = min(1, stats.load)
             HStack(spacing: DS.space3) {
                 Text("\(voices) voices")
@@ -147,26 +147,34 @@ private struct KeysStatsView: View {
 /// Sustain pedal, pitch bend and mod wheel as the Keys receive them.
 private struct ControllersView: View {
     @Environment(AppModel.self) private var model
+    @Environment(\.meteringActive) private var active
 
     var body: some View {
-        TimelineView(.periodic(from: .now, by: 0.05)) { _ in
-            let state = model.keys.controllers()
-            VStack(spacing: DS.space2) {
-                HStack(spacing: DS.space2) {
-                    wheel("PB", fill: Self.bendFill(state.bend), lit: abs(state.bend) > 0.01)
-                        .help("Pitch bend")
-                    wheel("MOD", fill: 0...state.modWheel, lit: state.modWheel > 0.01)
-                        .help("Modulation wheel")
-                }
-                Text("SUS")
-                    .font(.dsMeta.weight(.semibold))
-                    .foregroundStyle(state.sustain ? DS.onSelected : DS.textMuted)
-                    .frame(maxWidth: .infinity, minHeight: 20)
-                    .background(state.sustain ? DS.keys : DS.bgControl, in: RoundedRectangle(cornerRadius: DS.radiusSM))
-                    .help("Sustain pedal")
-            }
-            .frame(width: 64)
+        TimelineView(.animation(minimumInterval: 0.05, paused: !active)) { _ in
+            ControllersFace(state: model.keys.controllers()).equatable()
         }
+    }
+}
+
+private struct ControllersFace: View, Equatable {
+    var state: SF2Engine.Controllers
+
+    var body: some View {
+        VStack(spacing: DS.space2) {
+            HStack(spacing: DS.space2) {
+                wheel("PB", fill: Self.bendFill(state.bend), lit: abs(state.bend) > 0.01)
+                    .help("Pitch bend")
+                wheel("MOD", fill: 0...state.modWheel, lit: state.modWheel > 0.01)
+                    .help("Modulation wheel")
+            }
+            Text("SUS")
+                .font(.dsMeta.weight(.semibold))
+                .foregroundStyle(state.sustain ? DS.onSelected : DS.textMuted)
+                .frame(maxWidth: .infinity, minHeight: 20)
+                .background(state.sustain ? DS.keys : DS.bgControl, in: RoundedRectangle(cornerRadius: DS.radiusSM))
+                .help("Sustain pedal")
+        }
+        .frame(width: 64)
     }
 
     private static func bendFill(_ bend: Double) -> ClosedRange<Double> {
@@ -195,9 +203,21 @@ private struct ControllersView: View {
     }
 }
 
+/// Redraws only when the held notes change.
+private struct KeyboardCanvas: View, Equatable {
+    var held: SF2Engine.HeldKeys
+
+    var body: some View {
+        Canvas { context, size in
+            KeyboardMap.draw(context: context, size: size, held: held)
+        }
+    }
+}
+
 /// 88 keys with the notes currently sounding. Click or drag to play.
 private struct KeyboardMap: View {
     @Environment(AppModel.self) private var model
+    @Environment(\.meteringActive) private var active
     @State private var held: Int?
 
     private static let low = 21
@@ -206,11 +226,8 @@ private struct KeyboardMap: View {
 
     var body: some View {
         GeometryReader { geo in
-            TimelineView(.periodic(from: .now, by: 0.05)) { _ in
-                let active = model.keys.stats().keys
-                Canvas { context, size in
-                    Self.draw(context: context, size: size, active: active)
-                }
+            TimelineView(.animation(minimumInterval: 0.05, paused: !active)) { _ in
+                KeyboardCanvas(held: model.keys.heldKeys()).equatable()
             }
             .contentShape(Rectangle())
             .gesture(
@@ -275,15 +292,13 @@ private struct KeyboardMap: View {
         }
     }
 
-    private static func draw(context: GraphicsContext, size: CGSize, active: [Set<Int>]) {
+    fileprivate static func draw(context: GraphicsContext, size: CGSize, held: SF2Engine.HeldKeys) {
         let layout = Layout(size: size)
         let frame = layout.frame
 
         func color(for note: Int) -> Color? {
-            for index in active.indices where active[index].contains(note) {
-                return DS.keyColors[index % DS.keyColors.count]
-            }
-            return nil
+            guard let index = held.layer(holding: note) else { return nil }
+            return DS.keyColors[index % DS.keyColors.count]
         }
 
         for note in whiteNotes {
@@ -444,7 +459,7 @@ private struct KeyStrip: View {
                 Text("\(index + 1)")
                     .font(.dsChannel)
                     .foregroundStyle(color)
-                if let font = model.catalog.soundFont(slot.fileID) {
+                if let font = model.sf2Catalog.soundFont(slot.fileID) {
                     Text((font.subcategory.map { "\(font.category) · \($0)" } ?? font.category).uppercased())
                         .font(.dsMeta)
                         .foregroundStyle(DS.textMuted)
@@ -572,9 +587,6 @@ private struct KeyStrip: View {
                     .frame(maxWidth: .infinity)
                 knob("Reverb", .keysReverb, slot.reverb, color: color, enabled: slot.enabled, preview: false) { $0.reverb = $1 }
                     .frame(maxWidth: .infinity)
-                knob("Space", .keysSpace, slot.space, color: color, enabled: slot.enabled && model.keys.spaceNode != nil) { $0.space = $1 }
-                    .help(model.keys.spaceNode != nil ? "Valhalla Supermassive send" : "Valhalla Supermassive not found")
-                    .frame(maxWidth: .infinity)
                 OctaveControl(octave: slot.octave, enabled: slot.enabled) { value in
                     model.setKeyEffects(index: index) { $0.octave = value }
                 }
@@ -636,7 +648,7 @@ private struct KeyStrip: View {
         .frame(minHeight: 120, maxHeight: .infinity)
         Text("\(Int((slot.volume * 100).rounded()))")
             .font(.dsValue)
-            .foregroundStyle(slot.enabled ? DS.textPrimary : DS.textMuted)
+            .foregroundStyle(slot.enabled && slot.volume < KeyState.silentLevel ? DS.yellow : (slot.enabled ? DS.textPrimary : DS.textMuted))
         if model.learnOn {
             LearnChipFor(state: LearnState(model, .keysVolume, index))
             LearnChipFor(state: LearnState(model, .keysToggle, index), prefix: "Enable ")
